@@ -92,21 +92,7 @@ Specific applications can be launched using scripts provided. In this section I 
 
 ##### Gazebo-world, SLAM test & map-creation
 
-For my world file I started with the gazebo-world I have used in past (like the one in https://github.com/viks8dm/mapping_ROS). However, during SLAM and map preparation I realized that this world had following flaws:
-
-* it has very few features and a lot of open space. This leads to `gmapping` error with following messages:
-	* `Scan Matching Failed, using odometry. Likelihood=0`
-* There were two carts in the model which were not fixed. So while the robot completed a loop and came back to a spot near one of the carts, the mapping algorithm was getting confused and resulting in image rotation in rviz, similar to that shown below.
-
-
-![gmapping_error](./images/gmapping_error.jpg)
-
-*Fig.1: gmapping-error sample*
-
-Hence I added features to the world and updated it to that shown here:
-
-![world](./images/gazebo_image.jpg)
-*Fig.2: home-service-world*
+For my world, I made a new world where I made a small world to map it faster with a lot of features inside and use test_slam.sh to map it.
 
 For SLAM-test go to `src/scripts` folder and run `test_slam.sh` script:
 
