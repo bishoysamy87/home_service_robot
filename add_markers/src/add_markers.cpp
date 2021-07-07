@@ -1,5 +1,15 @@
 #include <ros/ros.h>
 #include <visualization_msgs/Marker.h>
+#include "std_msgs/String.h"
+bool robot_is_on_place = false;
+int counter = 0;
+void pickstatusCallback(const std_msgs::String::ConstPtr& msg)
+{
+  ROS_INFO("reached: [%s]", msg->data.c_str());
+  robot_is_on_place =true;
+  counter++;
+   ROS_INFO("callback counter: [%d]", counter);
+}
 
 int main( int argc, char** argv )
 {
@@ -7,6 +17,7 @@ int main( int argc, char** argv )
   ros::NodeHandle n;
   ros::Rate r(1);
   ros::Publisher marker_pub = n.advertise<visualization_msgs::Marker>("visualization_marker", 1);
+  ros::Subscriber sub = n.subscribe("pickstatus", 1000, pickstatusCallback);
 
   // Set our initial shape type to be a cube
   uint32_t shape = visualization_msgs::Marker::CUBE;
@@ -28,8 +39,8 @@ int main( int argc, char** argv )
     marker.action = visualization_msgs::Marker::ADD;
 
     // Set the pose of the marker.  This is a full 6DOF pose relative to the frame/time specified in the header
-    marker.pose.position.x = 0;
-    marker.pose.position.y = 1.0;
+    marker.pose.position.x = 2.0;
+    marker.pose.position.y = 2.0;
     marker.pose.position.z = 0;
     marker.pose.orientation.x = 0.0;
     marker.pose.orientation.y = 0.0;
@@ -60,13 +71,23 @@ int main( int argc, char** argv )
       sleep(1);
     }
     marker_pub.publish(marker);
+    while(ros::ok() && robot_is_on_place == false)
+    {  
+       ros::spinOnce();   
+    }
+    robot_is_on_place = false;
     ros::Duration(5.0).sleep();
     marker.action = visualization_msgs::Marker::DELETE;
     marker_pub.publish(marker);
+    while(ros::ok() && robot_is_on_place == false)
+    {  
+       ros::spinOnce();   
+    }
+    robot_is_on_place = false;
     ros::Duration(5.0).sleep();
     marker.action = visualization_msgs::Marker::ADD;
     marker.pose.position.x = 2.0;
-    marker.pose.position.y = 0;
+    marker.pose.position.y = -2.0;
     marker.pose.position.z = 0;
     marker.pose.orientation.x = 0.0;
     marker.pose.orientation.y = 0.0;
