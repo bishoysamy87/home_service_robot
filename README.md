@@ -132,14 +132,11 @@ This will launch:
 * `amcl_demo.launch` to localize turtlebot
 * `view_navigation.launch` to observe map in rviz
 
-I used `2D Nav` tab in rviz to manually point out to two different goals, one at a time, and direct the robot to reach them and orient itself with respect to them. A sample image is shown below and the sample video can be found [here](https://youtu.be/DN2bRCeoVyI)
-
-![nav_sample](./images/nav_sample.jpg)
-*Fig.4: navigation-test sample*
+I used `2D Nav` tab in rviz to manually point out to two different goals, one at a time, and direct the robot to reach them and orient itself with respect to them.
 
 ##### Navigation Goal Node (pick-objects)
 
-To test robot's capability to reach multiple goals, as specified by the program (and not manually), I created pick_objects package and specifically `pick_objects_test.cpp` function. This can be tested following script which launches turtlebot, AMCL, rviz and pick_objects node:
+To test robot's capability to reach multiple goals, as specified by the program (and not manually), I created pick_objects package. This can be tested following script which launches turtlebot, AMCL, rviz and pick_objects node:
 
 ```
 cd ~/catkin_ws/src/scripts
@@ -148,14 +145,14 @@ cd ~/catkin_ws/src/scripts
 
 ##### Virtual Objects Node (add-markers)
 
-To model a virtual object with markers in rviz, I created add_markers package and specifically `add_markers_test.cpp` function. This can be tested following script which launches turtlebot, AMCL, rviz and add_markers node:
+To model a virtual object with markers in rviz, I created add_markers package. This can be tested following script which launches turtlebot, AMCL, rviz and add_markers node:
 
 ```
 cd ~/catkin_ws/src/scripts
 ./add_markers.sh
 ```
 
-
+the add marker will wait the robot to reach pickup to change the marker to drop off location, through the topic "pickstatus"
 
 ##### Home-Service-Robot package
 
